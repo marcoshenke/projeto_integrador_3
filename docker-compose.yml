@@ -1,7 +1,53 @@
 services:
-  web:
-    image: nginx:latest
-    container_name: nginx
+  app:
+    container_name: restaurant
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html/src
+      - ./config/php.ini:/etc/php/8.1/apache2/php.ini
+      - ./config/000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./config/apache2.conf:/etc/apache2/apache2.conf
+      - ./logs/apache2:/var/log/apache2
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 12G
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root-password
+      MYSQL_DATABASE: restaurant
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./config/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./database:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 12G
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 300M
     restart: always
     ports:
-      - "90:90"
+      - 8080:80
