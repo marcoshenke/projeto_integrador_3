@@ -9,13 +9,14 @@ services:
     ports:
       - "3308:3306"
     volumes:
-      - "./db:/docker-entrypoint-initdb.d"
+      - "./db/schema:/docker-entrypoint-initdb.d"
+      - "./db/data:/var/lib/mysql"
     networks:
       - lamp-docker
   www:
     depends_on:
       - db
-    image: php:8.1.1-apache
+    image: projeto-integrador-3-app
     volumes:
       - "./:/var/www/html"
     ports:
@@ -37,3 +38,5 @@ services:
 networks:
   lamp-docker:
     driver: bridge
+volumes:
+  db-volume:
