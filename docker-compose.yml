@@ -10,7 +10,7 @@ services:
       - "3308:3306"
     volumes:
       - "./db/schema:/docker-entrypoint-initdb.d"
-      - "./db/data:/var/lib/mysql"
+      - "db-volume:/var/lib/mysql"
     networks:
       - lamp-docker
   www:
