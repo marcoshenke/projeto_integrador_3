@@ -5,10 +5,12 @@ body {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   max-width: 800px;
   margin: 0 auto;
-  background: #fff;
-  padding: 20px;
+  background: #ffff;
+  padding: 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -19,6 +21,8 @@ h1, h2 {
 
 form {
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 form label {
@@ -27,8 +31,7 @@ form label {
   color: #555;
 }
 
-form input, form textarea {
-  width: 100%;
+form input, form textarea, form select {
   padding: 8px;
   margin-bottom: 12px;
   border: 1px solid #ccc;
@@ -60,4 +63,24 @@ table, th, td {
 th, td {
   padding: 10px;
   text-align: center;
+}
+
+.alert {
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.alert.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }

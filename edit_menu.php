@@ -5,6 +5,9 @@ error_reporting(E_ALL);
 
 require_once 'db/helpers/dbConnection.php';
 
+$sql_categories = "SELECT * FROM categories";
+$result_categories = $connect->query($sql_categories);
+
 if (isset($_GET['id'])) {
   $id = $_GET['id'];
   $result = $connect->query("SELECT * FROM items WHERE id = $id");
@@ -40,8 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Editar Item - Menu Restaurante</title>
-  <link rel="stylesheet" href="css/style.css">
 </head>
+<style>
+  <?php include "css/style.css" ?>
+</style>
 
 <body>
   <div class="container">
@@ -58,7 +63,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       <input type="number" id="price" name="price" value="<?php echo $item['price']; ?>" step="0.01" required>
 
       <label for="category_id">Categoria:</label>
-      <input type="text" id="category_id" name="category_id" value="<?php echo $item['category_id']; ?>" required>
+      <select name="category_id" id="category_id">
+        <?php while ($row = $result_categories->fetch_assoc()): ?>
+          <?php
+          $defaultCategory = $item['category_id'];
+          $selected = ($defaultCategory === $row['id']) ? 'selected' : '';
+          ?>
+          <option value="<?= $row['id']; ?>" <?= $selected; ?>>
+            <?= $row['name']; ?>
+          </option>
+        <?php endwhile; ?>
+      </select>
 
       <button type="submit">Atualizar Item</button>
     </form>
