@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $stmt->bind_param("ssdsi", $name, $description, $price, $category_id, $id);
 
   if ($stmt->execute()) {
-    header("Location: index.php");
+    header("Location: list_menu.php");
   } else {
     echo "Erro ao atualizar item: " . $connect->error;
   }
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h1>Editar Item</h1>
     <form action="edit_menu.php" method="POST">
       <input type="hidden" name="id" value="<?php echo $item['id']; ?>">
-      <label for="name">Nome do Prato:</label>
+      <label for="name">Nome do Item:</label>
       <input type="text" id="name" name="name" value="<?php echo $item['name']; ?>" required>
 
       <label for="description">Descrição:</label>

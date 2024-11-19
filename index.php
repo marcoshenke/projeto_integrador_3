@@ -17,9 +17,12 @@ $result = $connect->query($sql);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de Menu - Restaurante</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <style>
-  <?php include "css/style.css" ?>
+  <?php 
+    include "css/style.css"  
+  ?>
 </style>
 
 <body>
@@ -27,7 +30,7 @@ $result = $connect->query($sql);
     <h1>Cadastro - Menu Restaurante</h1>
 
     <form action="add_menu.php" method="post">
-      <label for="name">Nome do Prato:</label>
+      <label for="name">Nome do Item:</label>
       <input type="text" id="name" name="name" required>
 
       <label for="description">Descrição:</label>
@@ -46,41 +49,12 @@ $result = $connect->query($sql);
       </select>
 
       <button type="submit" id="submit" name="submit">Adicionar ao Menu</button>
+      <a class="all-itens" href="list_menu.php">
+        <p>Ver todos os itens cadastrados</p>
+      </a>
     </form>
 
-    <h2>Itens Cadastrados</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Descrição</th>
-          <th>Preço</th>
-          <th>
-            Categoria
-          </th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        $result = $connect->query("SELECT items.*, categories.name AS category_name 
-                                  FROM items 
-                                  JOIN categories ON items.category_id = categories.id");
-        while ($row = $result->fetch_assoc()) {
-          echo "<tr>
-          <td>$row[name]</td>
-          <td>$row[description]</td>
-          <td>$row[price]</td>
-          <td>$row[category_name]</td>
-          <td>
-            <a href='edit_menu.php?id=$row[id]'>Editar</a>  
-            <a href='delete_menu.php?id=$row[id]'>Excluir</a>
-          </td>
-          </tr>";
-        }
-        ?>
-      </tbody>
-    </table>
+    
   </div>
 </body>
 
